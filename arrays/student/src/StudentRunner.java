@@ -2,9 +2,7 @@ import java.math.BigDecimal;
 
 public class StudentRunner {
     public static void main(String[] args) throws Exception {
-        String name = "Olaf";
-        int[] marks = {99, 100,98};
-        Student student = new Student(name, marks);
+        Student student = new Student("Olaf", 90, 40, 80);
 
         int number = student.getNumberOfMark();
         System.out.println("Number of marks : "+ number);
