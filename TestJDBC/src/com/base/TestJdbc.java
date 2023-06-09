@@ -30,8 +30,8 @@ public class TestJdbc {
  * 
  */
 	public static void main(String[] args) {
-		Class.forName("");
-		String url = "";
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		String url = "jdbc:oracle:thin@localhost:1521:xe";
 		String user = "hr";
 		String pwd = "hr";
 		Connection conn = DriverManager.getConnection(url, user, pwd);
@@ -40,6 +40,7 @@ public class TestJdbc {
 		ResultSet result = stmt.executeQuery(sql);
 		result.next();
 		String data = result.getString(0);
+		System.out.println(data);
 		result.close();
 		stmt.close();
 		conn.close();
