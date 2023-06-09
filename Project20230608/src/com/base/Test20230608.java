@@ -1,24 +1,31 @@
 package com.base;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class Test20230608 {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// printTest();
 		// booleanTest();
 		// switchState();
 		// secondQuiz();
-		thirdQuiz(args);
+		thirdQuiz();
 	}
 
-	private static void thirdQuiz(String[] args) {
+	private static void thirdQuiz() throws IOException {
 		/*
 		 * switch의 가장 좋은 예
 		 */
 		
 		// 1. 두 숫자 입력 전에 하나의 기호를 먼저 입력 받는다.
-		Scanner sc = new Scanner(System.in);
-		String op = sc.next();
+		// Scanner sc = new Scanner(System.in);
+		// System.out.println("연산자를 입력해주세요 : ");
+		// String op = sc.next();
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("연산자를 입력해주세요 : ");
+		String op = in.readLine();
 		
 		// 2. 두 숫자를 입력 받는다.(args :: String[])
 		// 3. args[0], args[1]을 정수(int)형으로 변환
@@ -26,36 +33,36 @@ public class Test20230608 {
 		// 	  숫자 : String -> int로 변환
 		// int i1 = Integer.parseInt(args[0]);
 		// int i2 = Integer.parseInt(args[1]);
-		
-		int i1 = sc.nextInt();
-		int i2 = sc.nextInt();
-		sc.close();
+
+		String i1 = in.readLine();
+		System.out.println("첫번째 입력값 :" + i1);
+		String i2 = in.readLine();
+		System.out.println("두번째 입력값 :" + i2);
+		int intI1 = Integer.parseInt(i1);
+		int intI2 = Integer.parseInt(i2);
 		char opChar = op.charAt(0);
 	
 		// 6. 기호 모양에 따라 해당 연산을 해 결과를 result에 넣는다.
 		int result=0;
 		switch (opChar) {
 		case '+':
-			result = i1 + i2;
+			result = intI1 + intI2;
 			break;
 		case '-':
-			result = i1 - i2;
+			result = intI1 - intI2;
 			break;
 		case '*':
-			result = i1 * i2;
+			result = intI1 * intI2;
 			break;
 		case '/':
-			result = i1 / i2;
+			result = intI1 / intI2;
 			break;
 		default:
 			System.out.println("잘못된 입력입니다.");
 			break;
 		}
 		
-		System.out.println(result);
-		
-
-		
+		System.out.println(result);		
 	}
 
 	private static void secondQuiz() {
