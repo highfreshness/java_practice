@@ -3,6 +3,7 @@ package com.base;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class TestJdbc {
@@ -29,22 +30,55 @@ public class TestJdbc {
  * 	> stmt.close();
  * 
  */
-	public static void main(String[] args) {
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String url = "jdbc:oracle:thin@localhost:1521:xe";
-		String user = "hr";
-		String pwd = "hr";
-		Connection conn = DriverManager.getConnection(url, user, pwd);
-		Statement stmt = conn.createStatement();
-		String sql = "SELECT * FROM employees";
-		ResultSet result = stmt.executeQuery(sql);
-		result.next();
-		String data = result.getString(0);
-		System.out.println(data);
-		result.close();
-		stmt.close();
-		conn.close();
+	public static void main(String[] args){
+		
+//	    Class.forName("oracle.jdbc.driver.OracleDriver");
+//		String url = "jdbc:oracle:thin@localhost:1521:xe";
+//		String user = "hr";
+//		String pwd = "hr";
+//		Connection conn = DriverManager.getConnection(url, user, pwd);
+//		Statement stmt = conn.createStatement();
+//		String sql = "SELECT * FROM employees";
+//		ResultSet result = stmt.executeQuery(sql);
+//		result.next();
+//		String data = result.getString(0);
+//		System.out.println(data);
+//		result.close();
+//		stmt.close();
+//		conn.close();
+		 
+		
+        String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:XE";  // JDBC URL
+        String username = "hr";
+        String password = "hr";
 
-	}
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");  // JDBC 드라이버 클래스 로딩
+            conn = DriverManager.getConnection(jdbcUrl, username, password);  // Connection 생성
+            stmt = conn.createStatement();  // Statement 생성
+            rs = stmt.executeQuery("SELECT * FROM employees");  // SELECT 쿼리 실행
 
+            while (rs.next()) {  // 결과 출력
+                System.out.println(rs.getInt("employee_id") + ", " + rs.getString("first_name"));
+            }
+
+        } 
+        catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+        } 
+        finally {
+            try { rs.close(); } catch (Exception e) {}
+            try { stmt.close(); } catch (Exception e) {}
+            try { conn.close(); } catch (Exception e) {}
+        }
+    }
 }
+
+
