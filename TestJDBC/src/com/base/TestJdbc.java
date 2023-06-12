@@ -32,22 +32,6 @@ public class TestJdbc {
  */
 	public static void main(String[] args){
 		
-//	    Class.forName("oracle.jdbc.driver.OracleDriver");
-//		String url = "jdbc:oracle:thin@localhost:1521:xe";
-//		String user = "hr";
-//		String pwd = "hr";
-//		Connection conn = DriverManager.getConnection(url, user, pwd);
-//		Statement stmt = conn.createStatement();
-//		String sql = "SELECT * FROM employees";
-//		ResultSet result = stmt.executeQuery(sql);
-//		result.next();
-//		String data = result.getString(0);
-//		System.out.println(data);
-//		result.close();
-//		stmt.close();
-//		conn.close();
-		 
-		
         String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:XE";  // JDBC URL
         String username = "hr";
         String password = "hr";
@@ -64,16 +48,41 @@ public class TestJdbc {
 
             while (rs.next()) {  // 결과 출력
                 System.out.println(rs.getInt("employee_id") + ", " + rs.getString("first_name"));
+                // System.out.println(rs); 그냥 rs만으로는 내용을 확인할 수 없음.
+                
+               /*
+                * 전체 결과 출력
+                * for (int i = 1; i <= columnsNumber; i++) {
+                    String columnValue = rs.getString(i);
+                    System.out.print(columnValue + " ");
+                  }
+                System.out.println();
+                */
             }
 
         } 
         catch (ClassNotFoundException e) {
+        	/*
+        	 *  JDBC 드라이버 클래스가 로드되지 않았을 때 발생
+        	 *  이 예외가 발생하면 JDBC 드라이버 클래스가 로드되지 않은 것이므로, 
+        	 *  이 예외를 잡아내서 드라이버 클래스를 로드해줘야 합니다.
+        	 */
             e.printStackTrace();
         } 
         catch (SQLException e) {
+        	/*
+        	 * 데이터베이스에 대한 연결 또는 쿼리 실행 과정에서 발생할 수 있는 예외
+        	 * 데이터베이스와의 연결이 끊어졌거나 쿼리 실행에 실패하면 SQLException이 발생
+        	 */
             e.printStackTrace();
         } 
         finally {
+        	/*
+        	 * 사용한 ResultSet, Statement, Connection 등의 자원들은 
+        	 * 연결을 해제하는데 시간이 오래 걸려서, 사용하고 난 후 반드시 닫아주어야 한다. 
+        	 * 그렇지 않으면, 자원 누수(memory leak)가 발생하여 불필요한 자원이 낭비될 수 있기 때문,
+        	 * 자원을 닫는 close() 메소드를 호출하여, 사용한 자원을 release 해준다.
+        	 */
             try { rs.close(); } catch (Exception e) {}
             try { stmt.close(); } catch (Exception e) {}
             try { conn.close(); } catch (Exception e) {}
